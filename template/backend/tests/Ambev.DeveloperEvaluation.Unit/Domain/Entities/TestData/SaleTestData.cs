@@ -8,18 +8,59 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData
     /// </summary>  
     internal static class SaleTestData
     {
-        private static readonly Faker<SaleItem> SaleItemFaker = new Faker<SaleItem>()
-            .RuleFor(si => si.Product, f => f.Commerce.ProductName())
-            .RuleFor(si => si.Quantity, f => f.Random.Int(1, 100))
-            .RuleFor(si => si.UnitPrice, f => f.Finance.Amount(1, 1000));
+        /// <summary>  
+        /// Generates a list of SaleItems to simulate each validation rule in CreateSaleCommandValidator.  
+        /// </summary>  
+        /// <param name="quantityProduct">The quantity of the product to generate.</param>  
+        /// <param name="isValid">Indicates whether to generate valid or invalid SaleItems.</param>  
+        /// <returns>A list of SaleItems covering all validation scenarios.</returns>  
+        private static List<SaleItem> GenerateSaleItemsForValidation(int quantityProduct = 1, bool isValid = true)
+        {
+            if (isValid)
+            {
+                decimal CalculateDiscount(int quantity)
+                {
+                    if (quantity < 4) return 0;
+                    if (quantity >= 4 && quantity < 10) return 10;
+                    if (quantity >= 10 && quantity <= 20) return 20;
+                    return 0;
+                }
+
+                decimal unitPrice = 10;
+                decimal discountPercentage = CalculateDiscount(quantityProduct);
+                decimal totalAmount = unitPrice * quantityProduct;
+                decimal discountAmount = totalAmount * (discountPercentage / 100);
+                decimal totalAmountWithDiscount = totalAmount - discountAmount;
+
+                return new List<SaleItem>
+               {
+                   new SaleItem
+                   {
+                       Product = "Valid Product",
+                       Quantity = quantityProduct,
+                       UnitPrice = unitPrice,
+                       Discount = discountPercentage,
+                   }
+               };
+            }
+            else
+            {
+                return new List<SaleItem>
+               {
+                   new SaleItem
+                   {
+                       Product = "InvalidProduct1",
+                       Quantity = 0,
+                       UnitPrice = 50,
+                       Discount = 0
+                   }
+               };
+            }
+        }
 
         private static readonly Faker<Sale> SaleFaker = new Faker<Sale>()
-           .RuleFor(s => s.SaleNumber, f => f.Random.Int(1, 100000))
-           .RuleFor(s => s.SaleDate, f => f.Date.Past(1))
+           .RuleFor(s => s.CreatedAt, f => f.Date.Past(1))
            .RuleFor(s => s.Customer, f => f.Person.FullName)
-           .RuleFor(s => s.Products, f => SaleItemFaker.Generate(f.Random.Int(1, 10)))
-           .RuleFor(s => s.Discount, f => f.Finance.Amount(0, 500))
-           .RuleFor(s => s.TotalAmount, (f, s) => s.Products.Sum(p => p.Quantity * p.UnitPrice) - s.Discount)
            .RuleFor(s => s.Branch, f => f.Company.CompanyName())
            .RuleFor(s => s.IsCanceled, f => f.Random.Bool());
 
@@ -29,7 +70,22 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData
         /// <returns>A valid Sale entity.</returns>  
         public static Sale GenerateValidSale()
         {
-            return SaleFaker.Generate();
+            var sale = SaleFaker.Generate();
+            sale.Products = GenerateSaleItemsForValidation(2, true);
+            sale.TotalAmount = sale.Products.Sum(p => p.TotalAmount);
+            sale.TotalAmountDiscont = sale.Products.Sum(p => p.TotalAmountWithDiscount);
+            return sale;
+        }
+
+        /// <summary>  
+        /// Generates a invalid Sale entity with randomized data.  
+        /// </summary>  
+        /// <returns>A valid Sale entity.</returns>  
+        public static Sale GenerateInvalidSale()
+        {
+            var sale = SaleFaker.Generate();
+            sale.Products = GenerateSaleItemsForValidation(2, false);
+            return sale;
         }
 
         /// <summary>  
@@ -40,25 +96,6 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData
         public static List<Sale> GenerateValidSales(int count)
         {
             return SaleFaker.Generate(count);
-        }
-
-        /// <summary>  
-        /// Generates a Sale entity with invalid data for testing negative scenarios.  
-        /// </summary>  
-        /// <returns>An invalid Sale entity.</returns>  
-        public static Sale GenerateInvalidSale()
-        {
-            return new Sale
-            {
-                SaleNumber = -1,
-                SaleDate = DateTime.MinValue,
-                Customer = string.Empty,
-                TotalAmount = -100,
-                Branch = string.Empty,
-                Discount = -50,
-                Products = new List<SaleItem>(),
-                IsCanceled = false
-            };
         }
     }
 }
