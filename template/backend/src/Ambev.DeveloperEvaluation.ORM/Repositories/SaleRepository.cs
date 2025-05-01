@@ -22,12 +22,17 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteById(int saleNumber, CancellationToken cancellationToken = default)
+        public Task<bool> DeleteAsync(Guid saleNumber, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         public Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(Sale existingSale)
         {
             throw new NotImplementedException();
         }
