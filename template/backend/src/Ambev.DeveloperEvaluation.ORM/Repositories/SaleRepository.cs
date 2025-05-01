@@ -27,6 +27,11 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<Sale>> GetAllSalesAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
