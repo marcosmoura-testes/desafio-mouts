@@ -6,12 +6,6 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.TestData;
 
 public static class CreateSaleHandlerTestData
 {
-    /// <summary>  
-    /// Generates a list of SaleItems to simulate each validation rule in CreateSaleCommandValidator.  
-    /// </summary>  
-    /// <param name="quantityProduct">The quantity of the product to generate.</param>  
-    /// <param name="isValid">Indicates whether to generate valid or invalid SaleItems.</param>  
-    /// <returns>A list of SaleItems covering all validation scenarios.</returns>  
     private static List<SaleItem> GenerateSaleItemsForValidation(int quantityProduct = 1, bool isValid = true)
     {
         if (isValid)

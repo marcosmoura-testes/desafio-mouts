@@ -9,9 +9,10 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.ListSales
         private readonly ISaleRepository _saleRepository;
         private readonly IMapper _mapper;
 
-        public ListSalesHandler(ISaleRepository saleRepository)
+        public ListSalesHandler(ISaleRepository saleRepository, IMapper mapper)
         {
             _saleRepository = saleRepository;
+            _mapper = mapper;
         }
 
         public async Task<ListSalesResult> Handle(ListSalesQuery request, CancellationToken cancellationToken)

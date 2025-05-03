@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale
 {
-    internal class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleResult>
+    public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleResult>
     {
         private readonly ISaleRepository _saleRepository;
 

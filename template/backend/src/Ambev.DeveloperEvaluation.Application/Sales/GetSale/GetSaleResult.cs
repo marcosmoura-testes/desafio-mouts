@@ -5,7 +5,7 @@ public class GetSaleResult
     /// <summary>  
     /// Unique identifier number for the sale.  
     /// </summary>  
-    public int SaleNumber { get; set; }
+    public Guid SaleNumber { get; set; }
 
     /// <summary>  
     /// Date when the sale was made.  

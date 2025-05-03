@@ -3,11 +3,11 @@ using FluentValidation;
 using MediatR;
 namespace Ambev.DeveloperEvaluation.Application.Sales.DeleteSale;
 
-public class DeleteSaleHandle : IRequestHandler<DeleteSaleCommand, DeleteSaleResponse>
+public class DeleteSaleHandler : IRequestHandler<DeleteSaleCommand, DeleteSaleResponse>
 {
     private readonly ISaleRepository _saleRepository;
 
-    public DeleteSaleHandle(
+    public DeleteSaleHandler(
         ISaleRepository saleRepository)
     {
         _saleRepository = saleRepository;
