@@ -8,6 +8,7 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale
 {
     public class CreateSaleResult
     {
-        public Guid SaleNumber { get; set; }
+        public Guid SaleId { get; set; }
+        public int SaleNumber { get; set; }
     }
 }

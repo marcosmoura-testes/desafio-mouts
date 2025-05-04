@@ -6,8 +6,8 @@ public class GetSaleValidator : AbstractValidator<GetSaleCommand>
 {
     public GetSaleValidator()
     {
-        RuleFor(x => x.SaleNumber)
+        RuleFor(x => x.SaleId)
             .NotEmpty()
-            .WithMessage("Sale Number is required");
+            .WithMessage("Sale Id is required");
     }
 }

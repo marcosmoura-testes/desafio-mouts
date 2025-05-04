@@ -1,10 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories
 {
@@ -17,29 +13,44 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
             _context = context;
         }
 
-        public Task<Sale> CreateAsync(Sale sale, CancellationToken cancellationToken = default)
+        public async Task<Sale> CreateAsync(Sale sale, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await _context.Set<Sale>().AddAsync(sale, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+            return sale;
         }
 
-        public Task<bool> DeleteAsync(Guid saleNumber, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(Guid saleId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var sale = await _context.Set<Sale>().FirstOrDefaultAsync(s => s.SaleId == saleId, cancellationToken);
+            if (sale == null) return false;
+
+            _context.Set<Sale>().Remove(sale);
+            await _context.SaveChangesAsync(cancellationToken);
+            return true;
         }
 
-        public Task<IEnumerable<Sale>> GetAllSalesAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Sale>> GetAllSalesAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _context.Set<Sale>()
+                .AsNoTracking()
+                .OrderBy(s => s.CreatedAt)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
         }
 
-        public Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await _context.Set<Sale>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(s => s.SaleId == id, cancellationToken);
         }
 
-        public Task UpdateAsync(Sale existingSale)
+        public async Task UpdateAsync(Sale existingSale)
         {
-            throw new NotImplementedException();
+            _context.Set<Sale>().Update(existingSale);
+            await _context.SaveChangesAsync();
         }
     }
 }

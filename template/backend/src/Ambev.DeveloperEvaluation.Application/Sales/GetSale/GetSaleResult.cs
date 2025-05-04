@@ -3,9 +3,14 @@
 public class GetSaleResult
 {
     /// <summary>  
+    /// Unique identifier id for the sale.  
+    /// </summary>  
+    public Guid SaleId { get; set; }
+
+    /// <summary>  
     /// Unique identifier number for the sale.  
     /// </summary>  
-    public Guid SaleNumber { get; set; }
+    public int SaleNumber { get; set; }
 
     /// <summary>  
     /// Date when the sale was made.  

@@ -27,6 +27,7 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale
 
             var sale = _mapper.Map<Sale>(command);
 
+            sale.CreatedAt = DateTime.UtcNow;
             var createdSale = await _saleRepository.CreateAsync(sale, cancellationToken);
             var result = _mapper.Map<CreateSaleResult>(createdSale);
             return result;

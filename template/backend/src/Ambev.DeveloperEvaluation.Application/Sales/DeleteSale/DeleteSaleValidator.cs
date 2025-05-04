@@ -6,8 +6,8 @@ public class DeleteSaleValidator : AbstractValidator<DeleteSaleCommand>
 {
     public DeleteSaleValidator()
     {
-        RuleFor(x => x.SaleNumber)
+        RuleFor(x => x.SaleId)
             .NotEmpty()
-            .WithMessage("Sale Number is required");
+            .WithMessage("Sale Id is required");
     }
 }

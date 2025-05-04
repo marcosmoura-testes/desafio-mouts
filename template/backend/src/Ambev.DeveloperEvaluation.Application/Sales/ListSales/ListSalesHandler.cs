@@ -17,7 +17,7 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.ListSales
 
         public async Task<ListSalesResult> Handle(ListSalesQuery request, CancellationToken cancellationToken)
         {
-            var sales = await _saleRepository.GetAllSalesAsync(cancellationToken);
+            var sales = await _saleRepository.GetAllSalesAsync(request.PageNumber, request.PageSize, cancellationToken);
 
             var salesResult = new ListSalesResult
             {

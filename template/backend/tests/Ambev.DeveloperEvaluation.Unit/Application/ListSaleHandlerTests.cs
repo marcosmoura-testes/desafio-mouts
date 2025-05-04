@@ -40,7 +40,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application
                 Sales = _mapper.Map<List<SaleDto>>(sales),
             };
 
-            _saleRepository.GetAllSalesAsync(Arg.Any<CancellationToken>())
+            _saleRepository.GetAllSalesAsync(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<CancellationToken>())
             .Returns(sales);
 
             // Act
@@ -48,7 +48,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application
 
             // Assert
             createUserResult.Should().NotBeNull();
-            await _saleRepository.Received(1).GetAllSalesAsync(Arg.Any<CancellationToken>());
+            await _saleRepository.Received(1).GetAllSalesAsync(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<CancellationToken>());
         }
     }
 }

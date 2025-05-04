@@ -41,6 +41,7 @@ public class CreateSaleHandlerTests
 
         var result = new CreateSaleResult
         {
+            SaleId = sale.SaleId,
             SaleNumber = sale.SaleNumber,
         };
 

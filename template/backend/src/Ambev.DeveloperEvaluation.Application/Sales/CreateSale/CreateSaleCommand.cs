@@ -13,16 +13,6 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale
         public int SaleNumber { get; set; }
 
         /// <summary>  
-        /// Date when the sale was made.  
-        /// </summary>  
-        public DateTime CreatedAt { get; set; }
-
-        /// <summary>  
-        /// Date when the sale was updated.  
-        /// </summary>  
-        public DateTime UpdatedAt { get; set; }
-
-        /// <summary>  
         /// Name or identifier of the customer.  
         /// </summary>  
         public string Customer { get; set; }

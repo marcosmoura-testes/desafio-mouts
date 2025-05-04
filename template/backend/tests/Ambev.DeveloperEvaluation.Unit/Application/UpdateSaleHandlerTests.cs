@@ -35,12 +35,13 @@ namespace Ambev.DeveloperEvaluation.Unit.Application
             // Arrange
             var command = UpdateSaleHandlerTestData.GenerateValidCommand();
 
-            command.SaleId = 1;
+            command.SaleId = Guid.NewGuid();
 
             var sale = SaleTestData.GenerateValidSale();
 
             var result = new UpdateSaleResult
             {
+                SaleId = sale.SaleId,
                 SaleNumber = sale.SaleNumber,
             };
 

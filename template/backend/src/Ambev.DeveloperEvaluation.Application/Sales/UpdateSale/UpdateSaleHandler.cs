@@ -23,7 +23,7 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale
                 throw new ValidationException(validationResult.Errors);
 
             // Verifica se a venda existe  
-            var existingSale = await _saleRepository.GetByIdAsync(command.SaleNumber);
+            var existingSale = await _saleRepository.GetByIdAsync(command.SaleId);
             if (existingSale == null)
                 throw new KeyNotFoundException($"Sale with ID {command.SaleId} not found");
 
@@ -61,12 +61,14 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale
             var newItems = command.Products.Where(newItem => !existingSale.Products.Any(existingItem => existingItem.Product == newItem.Product));
             updatedProducts.AddRange(newItems);
 
+            existingSale.UpdatedAt = DateTime.UtcNow;
             existingSale.Products = updatedProducts;
 
             await _saleRepository.UpdateAsync(existingSale);
 
             return new UpdateSaleResult
             {
+                SaleId = existingSale.SaleId,
                 SaleNumber = existingSale.SaleNumber,
                 Success = true,
                 Message = "Sale updated successfully."

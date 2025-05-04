@@ -51,7 +51,6 @@ public static class CreateSaleHandlerTestData
     }
 
     private static readonly Faker<CreateSaleCommand> createSaleCommandFaker = new Faker<CreateSaleCommand>()
-        .RuleFor(s => s.CreatedAt, f => f.Date.Past(1))
         .RuleFor(s => s.Customer, f => f.Person.FullName)
         .RuleFor(s => s.Branch, f => f.Company.CompanyName());
 

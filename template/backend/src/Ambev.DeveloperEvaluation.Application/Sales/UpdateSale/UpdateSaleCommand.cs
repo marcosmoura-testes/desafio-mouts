@@ -14,12 +14,12 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
     /// <summary>
     /// Unique identifier for the sale to be updated.
     /// </summary>
-    public int SaleId { get; set; }
+    public Guid SaleId { get; set; }
 
     /// <summary>
     /// Updated sale number.
     /// </summary>
-    public Guid SaleNumber { get; set; }
+    public int SaleNumber { get; set; }
 
     /// <summary>
     /// Date when the sale was originally created (can be left unchanged).

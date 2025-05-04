@@ -30,12 +30,24 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
 
         /// <summary>  
         /// Total amount before applying the discount.  
+        /// This property is now backed by a private field to allow database population.  
         /// </summary>  
-        public decimal TotalAmount => Quantity * UnitPrice;
+        private decimal _totalAmount;
+        public decimal TotalAmount
+        {
+            get => _totalAmount == 0 ? Quantity * UnitPrice : _totalAmount;
+            set => _totalAmount = value;
+        }
 
         /// <summary>  
         /// Total amount after applying the discount.  
+        /// This property is now backed by a private field to allow database population.  
         /// </summary>  
-        public decimal TotalAmountWithDiscount => TotalAmount * (1 - Discount / 100);
+        private decimal _totalAmountWithDiscount;
+        public decimal TotalAmountWithDiscount
+        {
+            get => _totalAmountWithDiscount == 0 ? TotalAmount * (1 - Discount / 100) : _totalAmountWithDiscount;
+            set => _totalAmountWithDiscount = value;
+        }
     }
 }

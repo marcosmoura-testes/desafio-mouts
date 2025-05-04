@@ -2,8 +2,8 @@
 {
     public class UpdateSaleResult
     {
-        public int Id { get; set; }
-        public Guid SaleNumber { get; set; }
+        public Guid SaleId { get; set; }
+        public int SaleNumber { get; set; }
         public bool Success { get; set; }
         public string Message { get; set; }
     }
